@@ -1,0 +1,24 @@
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 25px 50px 50px 50px;
+  width: 30%;
+  border-radius: 20px;
+  box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.2);
+  div:first-of-type {
+    text-align: start;
+  }
+  form {
+    div {
+      margin-top: 20px;
+      width: 100%;
+      display: block;
+    }
+    button {
+      margin-top: 20px;
+    }
+  }
+}

@@ -13,9 +13,10 @@ function App() {
   useEffect(() => {
     const localToken = localStorage?.getItem('token');
     const localUsername = localStorage?.getItem('username');
+    const localRefreshToken = localStorage?.getItem('refreshToken');
 
-    if (localToken && localUsername) {
-      dispatch(onTokenChange(localToken));
+    if (localToken && localUsername && localRefreshToken) {
+      dispatch(onTokenChange({ token: localToken, refreshToken: localRefreshToken }));
       dispatch(onUsernameChange(localUsername));
     }
   });

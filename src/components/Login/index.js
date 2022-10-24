@@ -19,10 +19,11 @@ const Login = () => {
         password: data.password,
       })
       .then((response) => {
-        const token = response.data.accessToken;
-        dispatch(onTokenChange(token));
+        const { accessToken, refreshToken } = response.data;
+        dispatch(onTokenChange({ accessToken, refreshToken }));
         dispatch(onUsernameChange(data.login));
-        localStorage.setItem('token', token);
+        localStorage.setItem('token', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('username', data.login);
       })
       .catch((error) => {

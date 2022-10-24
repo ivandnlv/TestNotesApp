@@ -15,19 +15,25 @@ const Registration = () => {
 
   const sendData = (e) => {
     e.preventDefault();
-    axios
-      .post('https://test-api.misaka.net.ru/api/Account/register', {
-        username: data.login,
-        email: data.email,
-        password: data.password,
-      })
-      .then((response) => {
-        const token = response.data.accessToken;
-        dispatch(onTokenChange(token));
-        dispatch(onUsernameChange(data.login));
-        localStorage.setItem('token', token);
-        localStorage.setItem('username', data.login);
-      });
+    try {
+      axios
+        .post('https://test-api.misaka.net.ru/api/Account/register', {
+          username: data.login,
+          email: data.email,
+          password: data.password,
+        })
+        .then((response) => {
+          const { accessToken, refreshToken } = response.data;
+          dispatch(onTokenChange({ token: accessToken, refreshToken: refreshToken }));
+          dispatch(onUsernameChange(data.login));
+          localStorage.setItem('token', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
+          localStorage.setItem('username', data.login);
+        })
+        .catch((error) => console.log('Неправильный логин или пароль'));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onLoginChange = (login) => {
@@ -51,20 +57,17 @@ const Registration = () => {
   return (
     <form action="#">
       <TextField
-        id="outlined-basic"
         label="Придумайте логин"
         variant="outlined"
         value={data.login}
         onChange={(e) => onLoginChange(e.target.value)}
       />
       <TextField
-        id="outlined-basic"
         label="Введите email"
         variant="outlined"
         onChange={(e) => onEmailChange(e.target.value)}
       />
       <TextField
-        id="outlined-basic"
         label="Придумайте пароль"
         variant="outlined"
         type="password"

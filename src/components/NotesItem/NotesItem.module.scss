@@ -1,0 +1,17 @@
+.note {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 0.2fr;
+  padding: 20px;
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.5);
+  align-items: center;
+  p {
+    margin-top: 10px;
+  }
+  span {
+    display: block;
+    margin-top: 10px;
+  }
+}

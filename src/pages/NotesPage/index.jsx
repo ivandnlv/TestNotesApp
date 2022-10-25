@@ -1,10 +1,15 @@
 import axios from 'axios';
-import Header from '../../components/Header';
-
 import { useSelector, useDispatch } from 'react-redux';
-import { onTokenChange } from '../../redux/slices/userSlice';
+import { onRemoveUser, onTokenChange } from '../../redux/slices/userSlice';
 
-const Notes = () => {
+import Header from '../../components/Header';
+import NotesFolders from '../../components/NotesFolders';
+import Notes from '../../components/Notes';
+
+import styles from './NotesPage.module.scss';
+import NewNote from '../../components/NewNote';
+
+const NotesPage = () => {
   const dispatch = useDispatch();
   const { token, refreshToken } = useSelector((state) => state.user);
 
@@ -17,6 +22,10 @@ const Notes = () => {
         dispatch(onTokenChange({ token: data.accessToken, refreshToken: data.refreshToken }));
         localStorage.setItem('token', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(onRemoveUser());
       })
       .then(() => {
         axios
@@ -34,8 +43,13 @@ const Notes = () => {
     <div>
       <Header />
       <button onClick={onBtnClick}>НАЖМИ</button>
+      <div className={styles.notes}>
+        <NotesFolders />
+        <Notes />
+        <NewNote />
+      </div>
     </div>
   );
 };
 
-export default Notes;
+export default NotesPage;

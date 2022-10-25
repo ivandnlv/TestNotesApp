@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import LoginPage from '../../pages/LoginPage';
-import Notes from '../../pages/Notes';
+import NotesPage from '../../pages/NotesPage';
 
 import styles from './App.module.scss';
 import { onTokenChange, onUsernameChange } from '../../redux/slices/userSlice';
@@ -21,7 +21,7 @@ function App() {
     }
   });
 
-  return <div className={styles.app}>{token ? <Notes /> : <LoginPage />}</div>;
+  return <div className={styles.app}>{token ? <NotesPage /> : <LoginPage />}</div>;
 }
 
 export default App;

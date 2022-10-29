@@ -1,36 +1,37 @@
-import axios from 'axios';
 import { useEffect } from 'react';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import EmptyFolders from '../EmptyFolders';
+import { useSelector, useDispatch } from 'react-redux';
 import NotesFoldersItem from '../NotesFoldersItem';
+import EmptyFolders from '../EmptyFolders';
 
 import styles from './NotesFolders.module.scss';
+import { getFolders } from '../../redux/slices/newSlice';
 
 const NotesFolders = () => {
-  const { token } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
-  const [folders, setFolders] = useState([]);
+  const { token } = useSelector((state) => state.user);
+  const { folders, update } = useSelector((state) => state.new);
 
   useEffect(() => {
-    axios
-      .get('https://test-api.misaka.net.ru/api/Folders', {
-        headers: {
-          accept: 'text/plain',
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setFolders(response.data);
-      });
-  }, [token]);
+    dispatch(getFolders(token)); // eslint-disable-next-line
+  }, [update]);
 
   return (
     <div className={styles.folders}>
       <h2>Папки</h2>
       <div>
-        {/* {folders.length ? folders.map((folder) => <div>{folder}</div>) : <EmptyFolders />} */}
-        <NotesFoldersItem name='Важные дела'/>
+        {folders?.length ? (
+          folders.map((folder) => (
+            <NotesFoldersItem
+              key={folder.id}
+              name={folder.name}
+              id={folder.id}
+              color={folder.color.toLowerCase()}
+            />
+          ))
+        ) : (
+          <EmptyFolders />
+        )}
       </div>
     </div>
   );

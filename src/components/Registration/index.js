@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { TextField, Button } from '@mui/material';
-import { onTokenChange, onUsernameChange } from '../../redux/slices/userSlice';
+import { createUser } from '../../redux/slices/userSlice';
 
 const Registration = () => {
   const dispatch = useDispatch();
@@ -15,25 +14,7 @@ const Registration = () => {
 
   const sendData = (e) => {
     e.preventDefault();
-    try {
-      axios
-        .post('https://test-api.misaka.net.ru/api/Account/register', {
-          username: data.login,
-          email: data.email,
-          password: data.password,
-        })
-        .then((response) => {
-          const { accessToken, refreshToken } = response.data;
-          dispatch(onTokenChange({ token: accessToken, refreshToken: refreshToken }));
-          dispatch(onUsernameChange(data.login));
-          localStorage.setItem('token', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
-          localStorage.setItem('username', data.login);
-        })
-        .catch((error) => console.log('Неправильный логин или пароль'));
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(createUser({ username: data.login, email: data.email, password: data.password }));
   };
 
   const onLoginChange = (login) => {

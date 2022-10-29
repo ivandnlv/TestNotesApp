@@ -1,5 +1,20 @@
 .new {
-	position: absolute;
-	bottom: 20px;
-	right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  div:first-of-type {
+    transition: opacity 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    button {
+      font-size: 18px;
+      display: block;
+      background: #fff;
+      margin-bottom: 20px;
+    }
+  }
 }

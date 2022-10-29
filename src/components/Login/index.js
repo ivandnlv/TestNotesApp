@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux/es/exports';
-import { onTokenChange, onUsernameChange } from '../../redux/slices/userSlice';
+import { authUser, onTokenChange, onUsernameChange } from '../../redux/slices/userSlice';
 import { TextField, Button } from '@mui/material';
 import axios from 'axios';
 import { useState } from 'react';
@@ -13,22 +13,7 @@ const Login = () => {
   });
 
   const sendData = async () => {
-    await axios
-      .post('https://test-api.misaka.net.ru/api/Account/login', {
-        username: data.login,
-        password: data.password,
-      })
-      .then((response) => {
-        const { accessToken, refreshToken } = response.data;
-        dispatch(onTokenChange({ accessToken, refreshToken }));
-        dispatch(onUsernameChange(data.login));
-        localStorage.setItem('token', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-        localStorage.setItem('username', data.login);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(authUser({ login: data.login, password: data.password }));
   };
 
   const onLoginChange = (login) => {

@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import newSlice from './slices/newSlice';
+import foldersSlice from './slices/foldersSlice';
+import notesSlice from './slices/notesSlice';
 import userSlice from './slices/userSlice';
 
 export default configureStore({
   reducer: {
     user: userSlice,
-    new: newSlice
+    folders: foldersSlice,
+    notes: notesSlice,
   },
 });

@@ -9,11 +9,13 @@ import styles from './NotesPage.module.scss';
 import NewNote from '../../components/NewNote';
 import { useEffect } from 'react';
 import NewFolderModal from '../../components/NewFolderModal';
+import NewNoteModal from '../../components/NewNoteModal';
 
 const NotesPage = () => {
   const dispatch = useDispatch();
   const { refreshToken } = useSelector((state) => state.user);
-  const { newFolder, newNote } = useSelector((state) => state.new);
+  const { newFolder } = useSelector((state) => state.folders);
+  const { newNote } = useSelector((state) => state.notes);
 
   useEffect(() => {
     dispatch(updateToken(refreshToken));
@@ -21,8 +23,9 @@ const NotesPage = () => {
 
   return (
     <div>
+      {newFolder && <NewFolderModal />}
+      {newNote && <NewNoteModal />}
       <Header />
-      <NewFolderModal />
       <div className={styles.notes}>
         <NotesFolders />
         <Notes />

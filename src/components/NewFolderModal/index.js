@@ -1,14 +1,26 @@
 import { Modal } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { onCloseAll } from '../../redux/slices/newSlice';
 import { Controller, useForm } from 'react-hook-form';
 import { TextField, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
-import { createNewFolder } from '../../redux/slices/newSlice';
+import { createNewFolder, onCloseAll } from '../../redux/slices/foldersSlice';
 import styles from './NewFolderModal.module.scss';
+
+export const radioColors = [
+  { color: 'White', label: 'Белый' },
+  { color: 'Blue', label: 'Синий' },
+  { color: 'Orange', label: 'Оранжевый' },
+  { color: 'Red', label: 'Красный' },
+  { color: 'Yellow', label: 'Желтый' },
+  { color: 'Purple', label: 'Фиолетовый' },
+  { color: 'Pink', label: 'Розовый' },
+  { color: 'Green', label: 'Зеленый' },
+  { color: 'Lime', label: 'Лаймовый' },
+  { color: 'LightGray', label: 'Светло-серый' },
+];
 
 const NewFolderModal = () => {
   const dispatch = useDispatch();
-  const { newFolder } = useSelector((state) => state.new);
+  const { newFolder } = useSelector((state) => state.folders);
   const { token } = useSelector((state) => state.user);
 
   const {
@@ -25,19 +37,6 @@ const NewFolderModal = () => {
   const onCloseModal = () => {
     dispatch(onCloseAll());
   };
-
-  const radioColors = [
-    { color: 'White', label: 'Белый' },
-    { color: 'Blue', label: 'Синий' },
-    { color: 'Orange', label: 'Оранжевый' },
-    { color: 'Red', label: 'Красный' },
-    { color: 'Yellow', label: 'Желтый' },
-    { color: 'Purple', label: 'Фиолетовый' },
-    { color: 'Pink', label: 'Розовый' },
-    { color: 'Green', label: 'Зеленый' },
-    { color: 'Lime', label: 'Лаймовый' },
-    { color: 'LightGray', label: 'Светло-серый' },
-  ];
 
   return (
     <div className={styles.modal}>

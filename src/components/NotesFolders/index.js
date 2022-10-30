@@ -4,13 +4,13 @@ import NotesFoldersItem from '../NotesFoldersItem';
 import EmptyFolders from '../EmptyFolders';
 
 import styles from './NotesFolders.module.scss';
-import { getFolders } from '../../redux/slices/newSlice';
+import { getFolders } from '../../redux/slices/foldersSlice';
 
 const NotesFolders = () => {
   const dispatch = useDispatch();
 
   const { token } = useSelector((state) => state.user);
-  const { folders, update } = useSelector((state) => state.new);
+  const { folders, update } = useSelector((state) => state.folders);
 
   useEffect(() => {
     dispatch(getFolders(token)); // eslint-disable-next-line

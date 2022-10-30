@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { setId } from './notesSlice';
 
-const headers = (token) => {
+export const headers = (token) => {
   return {
     accept: 'text/plain',
     Authorization: `Bearer ${token}`,
@@ -9,19 +10,22 @@ const headers = (token) => {
   };
 };
 
-export const getFolders = createAsyncThunk('new/getFolders', async (token, { rejectWithValue }) => {
-  try {
-    const response = await axios.get('https://test-api.misaka.net.ru/api/Folders', {
-      headers: headers(token),
-    });
-    return response.data;
-  } catch (error) {
-    rejectWithValue();
-  }
-});
+export const getFolders = createAsyncThunk(
+  'folders/getFolders',
+  async (token, { rejectWithValue }) => {
+    try {
+      const response = await axios.get('https://test-api.misaka.net.ru/api/Folders', {
+        headers: headers(token),
+      });
+      return response.data;
+    } catch (error) {
+      rejectWithValue();
+    }
+  },
+);
 
 export const createNewFolder = createAsyncThunk(
-  'new/createNewFolder',
+  'folders/createNewFolder',
   async ({ folderName, folderColor, token }, { rejectWithValue }) => {
     try {
       const data = {
@@ -40,12 +44,13 @@ export const createNewFolder = createAsyncThunk(
 );
 
 export const deleteFolder = createAsyncThunk(
-  'new/deleteFolder',
-  async ({ token, id }, { rejectWithValue }) => {
+  'folders/deleteFolder',
+  async ({ token, id }, { dispatch, rejectWithValue }) => {
     try {
       const response = await axios.delete(`https://test-api.misaka.net.ru/api/Folders/${id}`, {
         headers: headers(token),
       });
+      dispatch(setId(null));
       return response;
     } catch (error) {
       rejectWithValue();
@@ -53,11 +58,10 @@ export const deleteFolder = createAsyncThunk(
   },
 );
 
-const newSlice = createSlice({
-  name: 'new',
+const foldersSlice = createSlice({
+  name: 'folders',
   initialState: {
     newFolder: false,
-    newNote: false,
     folderCreate: false,
     status: null,
     update: null,
@@ -66,12 +70,8 @@ const newSlice = createSlice({
     onNewFolderShow(state) {
       state.newFolder = true;
     },
-    onNewNote(state) {
-      state.newNote = true;
-    },
     onCloseAll(state) {
       state.newFolder = false;
-      state.newNote = false;
     },
   },
   extraReducers: {
@@ -111,5 +111,5 @@ const newSlice = createSlice({
   },
 });
 
-export const { onNewFolderShow, onNewNote, onCloseAll } = newSlice.actions;
-export default newSlice.reducer;
+export const { onNewFolderShow, onNewNote, onCloseAll } = foldersSlice.actions;
+export default foldersSlice.reducer;

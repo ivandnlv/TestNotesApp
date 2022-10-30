@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import styles from './NewNote.module.scss';
-import { onNewFolderShow } from '../../redux/slices/newSlice';
+import { onNewFolderShow } from '../../redux/slices/foldersSlice';
+import { onNewNoteShow } from '../../redux/slices/notesSlice';
 
 const NewNote = () => {
   const dispatch = useDispatch();
@@ -15,8 +16,12 @@ const NewNote = () => {
     dispatch(onNewFolderShow());
   };
 
+  const onCreateNoteClick = () => {
+    dispatch(onNewNoteShow());
+  };
+
   const onMouseHover = () => {
-    if (opacity == 1) {
+    if (opacity === 1) {
       setOpacity(0);
     } else {
       setOpacity(1);
@@ -31,11 +36,13 @@ const NewNote = () => {
             <Button size="large" onClick={onCreateFolderClick}>
               Создать папку
             </Button>
-            <Button size="large">Создать заметку</Button>
+            <Button size="large" onClick={onCreateNoteClick}>
+              Создать заметку
+            </Button>
           </>
         ) : (
           <>
-            <Button size="large" onClick={onCreateFolderClick} disabled>
+            <Button size="large" disabled>
               Создать папку
             </Button>
             <Button size="large" disabled>

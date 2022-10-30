@@ -42,7 +42,7 @@ https://test-notes-app-lake.vercel.app/
 * Валидация форм на клиенте :heavy_check_mark:
 * Реализовать перемещение заметок в другие папки
 * Использование Markdown для отображения текста заметки
-* Обеспечить автоматическую сборку и размещение сайта на Github Pages с помощью Github Actions (Gitlab Pages с помощью Gitlab CI)
+* Обеспечить автоматическую сборку и размещение сайта на Github Pages с помощью Github Actions (Gitlab Pages с помощью Gitlab CI) :heavy_check_mark: Github pages не поддерживает post запросы, поэтому залил на vercel
 
 ## Доп данные
 

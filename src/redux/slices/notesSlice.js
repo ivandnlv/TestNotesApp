@@ -6,6 +6,20 @@ import { headers } from './foldersSlice';
 //   "content": "string",
 //   "color": "White"
 
+export const deleteNote = createAsyncThunk(
+  'notes/deleteNotes',
+  async ({ id, token }, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`https://test-api.misaka.net.ru/api/Notes/${id}`, {
+        headers: headers(token),
+      });
+      return response;
+    } catch (error) {
+      rejectWithValue();
+    }
+  },
+);
+
 export const editNote = createAsyncThunk(
   'notes/editNotes',
   async ({ token, title, content, id }, { rejectWithValue }) => {
@@ -120,6 +134,17 @@ const notesSlice = createSlice({
       state.update = true;
     },
     [editNote.rejected]: (state) => {
+      state.status = 'error';
+    },
+    [deleteNote.fulfilled]: (state) => {
+      state.status = null;
+      state.update = null;
+    },
+    [deleteNote.pending]: (state) => {
+      state.status = 'loading';
+      state.update = true;
+    },
+    [deleteNote.rejected]: (state) => {
       state.status = 'error';
     },
   },

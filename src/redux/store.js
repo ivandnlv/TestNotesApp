@@ -9,4 +9,8 @@ export default configureStore({
     folders: foldersSlice,
     notes: notesSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

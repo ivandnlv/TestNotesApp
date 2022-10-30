@@ -8,6 +8,10 @@
   width: 30%;
   border-radius: 20px;
   box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.2);
+  p {
+    color: red;
+    margin: 20px 0;
+  }
   div:first-of-type {
     text-align: start;
   }

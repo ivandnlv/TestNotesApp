@@ -20,7 +20,7 @@ export const radioColors = [
 
 const NewFolderModal = () => {
   const dispatch = useDispatch();
-  const { newFolder } = useSelector((state) => state.folders);
+  const { newFolder, status } = useSelector((state) => state.folders);
   const { token } = useSelector((state) => state.user);
 
   const {
@@ -61,9 +61,12 @@ const NewFolderModal = () => {
                   message: 'Длина имени папки не может быть больше 32 символов',
                 },
               }}
-              render={({ field }) => (
+              render={({ field: { value, onChange, ref } }) => (
                 <TextField
-                  {...field}
+                  onChange={onChange}
+                  inputRef={ref}
+                  checked={value}
+                  value={value ? value : ''}
                   label="Введите имя папки"
                   error={errors?.folderName?.message ? true : false}
                 />
@@ -103,10 +106,15 @@ const NewFolderModal = () => {
                 )}
               />
             </label>
-
-            <Button variant="contained" type="submit">
-              Создать
-            </Button>
+            {status !== 'loading' ? (
+              <Button variant="contained" type="submit">
+                Создать
+              </Button>
+            ) : (
+              <Button variant="contained" type="submit" disabled>
+                Загрузка...
+              </Button>
+            )}
           </form>
         </div>
       </Modal>

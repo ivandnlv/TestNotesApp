@@ -11,9 +11,10 @@ const NotesFoldersItem = ({ name, color, id }) => {
 
   const { token } = useSelector((state) => state.user);
 
-  const onFolderClick = () => {
-    // dispatch;
-    dispatch(setId(id));
+  const onFolderClick = (e) => {
+    if (e.target.localName !== 'path' && e.target.localName !== 'svg') {
+      dispatch(setId(id));
+    }
   };
 
   const onDeleteFolder = () => {
@@ -21,7 +22,7 @@ const NotesFoldersItem = ({ name, color, id }) => {
   };
 
   return (
-    <div className={styles.folder} style={{ background: color }} onClick={onFolderClick}>
+    <div className={styles.folder} style={{ background: color }} onClick={(e) => onFolderClick(e)}>
       <FolderIcon />
       <span>{name}</span>
       <button onClick={onDeleteFolder}>

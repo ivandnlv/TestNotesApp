@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getNotes } from '../../redux/slices/notesSlice';
 import EmptyNotes from '../EmptyNotes';

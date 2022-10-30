@@ -18,7 +18,7 @@ export const createUser = createAsyncThunk(
 
       return [response.data, username];
     } catch (error) {
-      rejectWithValue();
+      return rejectWithValue();
     }
   },
 );
@@ -82,6 +82,9 @@ const userSlice = createSlice({
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('username');
     },
+    onClearStatus(state) {
+      state.status = null;
+    },
   },
   extraReducers: {
     [authUser.fulfilled]: (state, action) => {
@@ -124,8 +127,11 @@ const userSlice = createSlice({
       localStorage.setItem('refreshToken', state.refreshToken);
       localStorage.setItem('username', state.username);
     },
+    [createUser.rejected]: (state) => {
+      state.status = 'error';
+    },
   },
 });
 
-export const { onTokenChange, onUsernameChange, onRemoveUser } = userSlice.actions;
+export const { onTokenChange, onUsernameChange, onRemoveUser, onClearStatus } = userSlice.actions;
 export default userSlice.reducer;

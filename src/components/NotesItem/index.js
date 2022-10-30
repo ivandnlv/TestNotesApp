@@ -6,7 +6,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import styles from './NotesItem.module.scss';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editNote } from '../../redux/slices/notesSlice';
+import { deleteNote, editNote } from '../../redux/slices/notesSlice';
 
 const NotesItem = ({ title, content, color, created, updated, id }) => {
   const dispatch = useDispatch();
@@ -31,6 +31,10 @@ const NotesItem = ({ title, content, color, created, updated, id }) => {
 
   const onContentEdit = (value) => {
     setNoteContent(value);
+  };
+
+  const onDeleteClick = () => {
+    dispatch(deleteNote({ id, token }));
   };
 
   const onEditClick = () => {
@@ -61,7 +65,7 @@ const NotesItem = ({ title, content, color, created, updated, id }) => {
         <Button variant="contained" onClick={onEditClick}>
           {change ? <CheckIcon /> : <EditIcon color="white" />}
         </Button>
-        <Button variant="contained" color="error">
+        <Button variant="contained" color="error" onClick={onDeleteClick}>
           <DeleteIcon color="white" />
         </Button>
       </div>
